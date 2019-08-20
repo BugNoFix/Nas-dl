@@ -70,6 +70,12 @@ if module:
 	print(ok + 'All modules are installed')
 else:
 	print(non_ok + 'The modules are not installed')
+
+#create directory "exe"
+if not os.path.exists('./exe'):
+	print(os.path.exists('./exe'))
+	os.system('mkdir exe')
+
 # install youtube-dl
 try:
 	if not os.path.isfile('./youtube-dl.exe'):
