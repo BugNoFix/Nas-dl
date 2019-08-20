@@ -3,12 +3,12 @@ try:
 	try:
 		import requests
 	except:
-		os.system("pip install requests")
+		os.system('pip install requests')
 		import requests
 	try:
 		import cfscrape
 	except:
-		os.system("pip install cfscrape")
+		os.system('pip install cfscrape')
 		import cfscrape
 	module = True
 except:
@@ -17,16 +17,16 @@ except:
 
 def youtube_dl():
 	print('installing youtube-dl..')
-	url = "https://yt-dl.org/downloads/2019.08.13/youtube-dl.exe"
+	url = 'https://yt-dl.org/downloads/2019.08.13/youtube-dl.exe'
 	r = requests.get(url)
-	with open(r'youtube-dl.exe', 'wb') as f:
+	with open(r'exe\\youtube-dl.exe', 'wb') as f:
 		f.write(r.content)
 	# install last version of youtube-dl
-	os.system("youtube-dl.exe -U")
+	os.system('exe\\youtube-dl.exe -U')
 
 def phantom_js():
 	print('installing phantom-js..')
-	url = "https://phantomjs.org/download.html"
+	url = 'https://phantomjs.org/download.html'
 	page = requests.get(url).text
 	r = re.search(r'<a href="(https:\/\/bitbucket\.org\/ariya\/phantomjs\/downloads\/phantomjs-2\.1\.1-windows\.zip)">phantomjs.*windows\.zip<\/a>', str(page), re.IGNORECASE).group(1)
 	file = requests.get(r)
@@ -37,13 +37,13 @@ def phantom_js():
 
 	lista = glob.glob('temp1/phantomjs-*-windows/bin/phantomjs.exe')
 	for dire in lista:
-		os.rename(dire, "phantomjs.exe")
+		os.rename(dire, 'exe\\phantomjs.exe')
 	os.remove('temp.zip')
 	shutil.rmtree('temp1')
 
 def ffmpeg_ffprobe():
 	print('installing FFmpeg e FFprobe..')
-	url = "https://ffmpeg.zeranoe.com/builds/win64/static/"
+	url = 'https://ffmpeg.zeranoe.com/builds/win64/static/'
 	page = requests.get(url).text
 	r = re.search(r'<a href="(ffmpeg-.*-win64-static\.zip)" title="ffmpeg-.*-static\.zip">', str(page), re.IGNORECASE).group(1)
 	file = requests.get(url + r)
@@ -54,11 +54,11 @@ def ffmpeg_ffprobe():
 	if not os.path.isfile('./ffmpeg.exe'):
 		lista = glob.glob('temp1/ffmpeg-*-win64-static/bin/ffmpeg.exe')
 		for dire in lista:
-			os.rename(dire, "ffmpeg.exe")
+			os.rename(dire, 'exe\\ffmpeg.exe')
 	if not os.path.isfile('./ffprobe.exe'):
 		lista = glob.glob('temp1/ffmpeg-*-win64-static/bin/ffprobe.exe')
 		for dire in lista:
-			os.rename(dire, "ffprobe.exe")
+			os.rename(dire, 'exe\\ffprobe.exe')
 	os.remove('temp.zip')
 	shutil.rmtree('temp1')
 

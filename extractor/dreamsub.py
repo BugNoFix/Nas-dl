@@ -23,5 +23,5 @@ def Dreamsub(URL):
         page = sess.get('{}/{}/'.format(URL, n)).text
         keepem = re.search(r'https?:\/\/keepem.online\/(?:f|embed)\/...........', page, re.IGNORECASE)
         if keepem:
-            os.system('youtube-dl {0} -o "{1}/{2}/{3}"'.format(keepem.group(), CONFIG['Path'], RemoveSpecialCharacter(name), '%(title)s.%(ext)s'))
+            os.system('exe\\youtube-dl {0} -o "{1}/{2}/{3}"'.format(keepem.group(), CONFIG['Path'], RemoveSpecialCharacter(name), '%(title)s.%(ext)s'))
 

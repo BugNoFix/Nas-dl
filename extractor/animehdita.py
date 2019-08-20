@@ -16,4 +16,4 @@ def AnimeHDITA(URL):
 
     openload = re.search(r'src="(https?:\/\/(?:openload|oload)\..*\/(?:f|embed)\/.*)"/ scrolling="no"', str(page), re.IGNORECASE).group(1)
     if openload and OpenloadStreamangoCheck(openload):
-        os.system('youtube-dl {0} -o "{1}/{2}"'.format(openload, CONFIG['Path'], '%(title)s.%(ext)s'))
+        os.system('exe\\youtube-dl {0} -o "{1}/{2}"'.format(openload, CONFIG['Path'], '%(title)s.%(ext)s'))

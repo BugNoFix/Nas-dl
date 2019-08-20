@@ -17,4 +17,4 @@ def CB01(URL):
     if swzz:
         page = requests.get(swzz).text
         openload = re.search(r'<a href="(https?:\/\/(?:openload|oload)\..*\/(?:f|embed)\/.*)" class="', str(page), re.IGNORECASE)
-        os.system('youtube-dl {0} -o "{1}/{2}"'.format(openload.group(1), CONFIG['Path'], '%(title)s.%(ext)s'))
+        os.system('exe\\youtube-dl {0} -o "{1}/{2}"'.format(openload.group(1), CONFIG['Path'], '%(title)s.%(ext)s'))

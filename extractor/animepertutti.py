@@ -22,17 +22,17 @@ def AnimePerTutti(URL):
 
         openload = re.search(r'src="(https?:\/\/(?:openload|oload)\..*\/(?:f|embed)\/.*)" scrolling="no"', str(page), re.IGNORECASE).group(1)
         if openload and OpenloadStreamangoCheck(openload):
-            os.system('youtube-dl {0} -o "{1}/{2}/{3}"'.format(openload, CONFIG['Path'], RemoveSpecialCharacter(name), '%(title)s.%(ext)s'))
+            os.system('exe\\youtube-dl {0} -o "{1}/{2}/{3}"'.format(openload, CONFIG['Path'], RemoveSpecialCharacter(name), '%(title)s.%(ext)s'))
             continue
         
         streamango = re.search(r'src="(https?:\/\/streamango\.com\/embed\/.*)" scrolling="no"', str(page), re.IGNORECASE).group(1)
         if streamango and OpenloadStreamangoCheck(streamango):
-            os.system('youtube-dl {0} -o "{1}/{2}/{3}"'.format(streamango, CONFIG['Path'], RemoveSpecialCharacter(name), '%(title)s.%(ext)s'))
+            os.system('exe\\youtube-dl {0} -o "{1}/{2}/{3}"'.format(streamango, CONFIG['Path'], RemoveSpecialCharacter(name), '%(title)s.%(ext)s'))
             continue
 
         verystream = re.search(r'<a href="(https:\/\/verystream\.com\/stream\/.*)" target="_blank" rel="noopener noreferrer">Verystream<\/a>', str(page), re.IGNORECASE).group(1)
         if verystream and OpenloadStreamangoCheck(verystream):
-            os.system('youtube-dl {0} -o "{1}/{2}/{3}"'.format(verystream, CONFIG['Path'], RemoveSpecialCharacter(name), '%(title)s.%(ext)s'))
+            os.system('exe\\youtube-dl {0} -o "{1}/{2}/{3}"'.format(verystream, CONFIG['Path'], RemoveSpecialCharacter(name), '%(title)s.%(ext)s'))
             continue
             
         # Else
