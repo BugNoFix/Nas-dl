@@ -16,7 +16,7 @@ except:
 
 
 def youtube_dl():
-	print('install youtube-dl..')
+	print('installing youtube-dl..')
 	url = "https://yt-dl.org/downloads/2019.08.13/youtube-dl.exe"
 	r = requests.get(url)
 	with open(r'youtube-dl.exe', 'wb') as f:
@@ -25,7 +25,7 @@ def youtube_dl():
 	os.system("youtube-dl.exe -U")
 
 def phantom_js():
-	print('install phantom-js..')
+	print('installing phantom-js..')
 	url = "https://phantomjs.org/download.html"
 	page = requests.get(url).text
 	r = re.search(r'<a href="(https:\/\/bitbucket\.org\/ariya\/phantomjs\/downloads\/phantomjs-2\.1\.1-windows\.zip)">phantomjs.*windows\.zip<\/a>', str(page), re.IGNORECASE).group(1)
@@ -42,7 +42,7 @@ def phantom_js():
 	shutil.rmtree('temp1')
 
 def ffmpeg_ffprobe():
-	print('install FFmpeg e FFprobe..')
+	print('installing FFmpeg e FFprobe..')
 	url = "https://ffmpeg.zeranoe.com/builds/win64/static/"
 	page = requests.get(url).text
 	r = re.search(r'<a href="(ffmpeg-.*-win64-static\.zip)" title="ffmpeg-.*-static\.zip">', str(page), re.IGNORECASE).group(1)
@@ -67,24 +67,24 @@ ok = '[\033[1;32;40mok\033[1;37;40m] '
 non_ok = '[\033[1;31;40mX\033[1;37;40m] '
 os.system('cls')
 if module:
-	print(ok + 'All module are installed')
+	print(ok + 'All modules are installed')
 else:
-	print(non_ok + 'The module are not installed')
+	print(non_ok + 'The modules are not installed')
 # install youtube-dl
 try:
 	if not os.path.isfile('./youtube-dl.exe'):
 		youtube_dl()
-	print(ok + "Youtube-dl are installed")
+	print(ok + "Youtube-dl is installed")
 except:
-	print(non_ok + 'Youtube-dl are not installed')
+	print(non_ok + 'Youtube-dl is not installed')
 
 # install phantomjs
 try:
 	if not os.path.isfile('./phantomjs.exe'):
 		phantom_js()
-	print(ok + "Phantom-js are installed")
+	print(ok + "Phantom-js is installed")
 except:
-	print(non_ok + 'Phantom-js are not installed')
+	print(non_ok + 'Phantom-js is not installed')
 
 # install ffmpeg and ffprobe
 try:
