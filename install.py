@@ -1,3 +1,8 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
+# Copyright (c) 2019 bugnofix. Under MIT License.
+
 import os, re, glob, shutil, zipfile, time, sys
 try:
 	try:
