@@ -8,3 +8,7 @@ phantomjs.exe
 youtube-dl.exe
 
 __pycache__/utilies.cpython-37.pyc
+
+extractor/__pycache__/
+
+*.pyc

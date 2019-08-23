@@ -43,6 +43,9 @@ def NASDL(URL):
 	# FairyTailItalia
 	elif re.compile(FairyTailItalia_VALID).match(URL):
 		FairyTailItalia(URL)
+	# Tns
+	elif re.compile(Tns_VALID).match(URL):
+		Tns(URL)
 	# Openlaod
 	elif re.compile(r'https?:\/\/(?:openload|oload)\..*\/(?:f|embed)\/.*').match(URL):
 		os.system('youtube-dl {0} -o "{1}/{2}"'.format(URL, CONFIG['Path'], '%(title)s.%(ext)s'))
