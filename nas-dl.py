@@ -56,31 +56,60 @@ def NASDL(URL):
 		print('[NAS-DL] URL non valido! [ {} ]'.format(URL))
 		pass
 
-parser = argparse.ArgumentParser(description='Script per facilitare il download di contenuti dal web.')
-parser.add_argument('URL', type=str, help='URL o percorso di un file .txt.')
-args = parser.parse_args().URL
+def searcher(Anime):
+	# Variabili
+	url_anime = []
+	nome = []
+	Nsito = False
+	a = 1
 
-if re.compile('https?:\/\/.*').match(args):
-	NASDL(args)
+	# Dreamsub
+	temp1, temp2 = DreamsubSearcher(Anime)
+	# Verifico che temp1 abbia risultati
+	if len(temp1) != 0:
+		nome.append(temp1)
+		url_anime.append(temp2)
+		# La grammatica è importante
+		if len(temp1) == 1:
+			risultato = ' risultato'
+		else:
+			risultato = ' risultati'
+		print('['+ str(len(nome)) + '] ' + 'Dreamsub ha '+ str(len(temp1)) + risultato)
+	
+	# Tns
+	temp1, temp2 = TnsSearcher(Anime)
+	#verifico che temp1 abbia risultati
+	if len(temp1) != 0:
+		nome.append(temp1)
+		url_anime.append(temp2)
+		#La grammatica è importante
+		if len(temp1) == 1:
+			risultato = ' risultato'
+		else:
+			risultato = ' risultati'
+		print('['+ str(len(nome)) + '] ' + 'TnsFansub ha '+ str(len(temp1)) + risultato)
+
+	while not Nsito:
+		sito = input('\nInserisci il numero del sito[n] che vuoi usare: ')
+		if not int(sito) > len(nome):
+			Nsito = True
+		else:
+			print('Inserisci un numero valido di un sito')
+	for dati1, dati2 in zip(nome[int(sito)-1], url_anime[int(sito)-1]):
+		print('[' + str(a) + ']' + dati1)
+		a = a + 1
+
+parser = argparse.ArgumentParser(description='Script per facilitare il download di contenuti dal web.')
+parser.add_argument('Input', type=str, help='URL o percorso di un file .txt o nome dell\'anime.')
+parser.add_argument('-r', '--ricerca', help='Ricerca in modo automatico gli url dell\' anime desiderato.', action='store_true')
+
+args = parser.parse_args()
+
+if args.ricerca:
+	searcher(args.Input)
+elif re.compile('https?:\/\/.*').match(args.Input):
+	NASDL(args.Input)
 else:
-	lines = open(args).read().splitlines()
+	lines = open(args.Input).read().splitlines()
 	for url in lines:
 		NASDL(url)
-
-url_anime = []
-nome = []
-anime = input("Dimmi il nome da cercare: ")
-#Dreamsub
-temp1, temp2 = DreamsubSearcher(anime)
-nome.append(temp1)
-url_anime.append(temp2)
-if len(nome) > 0:
-	print('['+ str(len(nome)-1) + '] ' + 'Dreamsub ha '+ str(len(temp1)) + ' risultati')
-#altri
-
-
-a = 0
-sito = input('Inserisci il numero del sito[n] che vuoi usare: ')
-for dati1, dati2 in zip(nome[int(sito)], url_anime[int(sito)]):
-	print('[' + str(a) + ']' + dati1)
-	a = a + 1
