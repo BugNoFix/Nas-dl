@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-# Copyright (c) 2018 bugnofix. Under MIT License.
+# Copyright (c) 2019 bugnofix. Under MIT License.
 
 import requests, os, re, json, urllib.parse
-#from utilies import RemoveSpecialCharacter
+from utilies import RemoveSpecialCharacter
 
 # Load configs
 CONFIG = json.load(open('setting.json'))

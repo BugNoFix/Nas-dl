@@ -46,6 +46,9 @@ def NASDL(URL):
 	# Tns
 	elif re.compile(Tns_VALID).match(URL):
 		Tns(URL)
+	# AnimeUnity
+	elif re.compile(AnimeUnity_VALID).match(URL):
+		AnimeUnity(URL)
 	# Openlaod
 	elif re.compile(r'https?:\/\/(?:openload|oload)\..*\/(?:f|embed)\/.*').match(URL):
 		os.system('youtube-dl {0} -o "{1}/{2}"'.format(URL, CONFIG['Path'], '%(title)s.%(ext)s'))
