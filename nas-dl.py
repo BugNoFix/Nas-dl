@@ -4,7 +4,7 @@
 # Copyright (c) 2018 games195, BugNoFix. Under MIT License.
 
 from extractor import *
-import re, argparse, os, json
+import re, argparse, os, json, colorama
 
 # Load configs
 CONFIG = json.load(open('setting.json'))
@@ -46,9 +46,11 @@ def NASDL(URL):
 	# Tns
 	elif re.compile(Tns_VALID).match(URL):
 		Tns(URL)
+	'''
 	# AnimeUnity
 	elif re.compile(AnimeUnity_VALID).match(URL):
 		AnimeUnity(URL)
+	'''
 	# Openlaod
 	elif re.compile(r'https?:\/\/(?:openload|oload)\..*\/(?:f|embed)\/.*').match(URL):
 		os.system('youtube-dl {0} -o "{1}/{2}"'.format(URL, CONFIG['Path'], '%(title)s.%(ext)s'))
@@ -64,8 +66,12 @@ def searcher(Anime):
 	url_anime = []
 	nome = []
 	Nsito = False
+	Ndown = False
 	a = 1
-
+	non_ok = '[\033[1;31;40mX\033[1;37;40m] '
+	ok = '[\033[1;32;40mok\033[1;37;40m] '
+	color_reset = '\033[0;38;40m'
+	
 	# Dreamsub
 	temp1, temp2 = DreamsubSearcher(Anime)
 	# Verifico che temp1 abbia risultati
@@ -92,15 +98,25 @@ def searcher(Anime):
 			risultato = ' risultati'
 		print('['+ str(len(nome)) + '] ' + 'TnsFansub ha '+ str(len(temp1)) + risultato)
 
+	#selezione del sito e controllo dell'input
 	while not Nsito:
 		sito = input('\nInserisci il numero del sito[n] che vuoi usare: ')
 		if not int(sito) > len(nome):
 			Nsito = True
 		else:
-			print('Inserisci un numero valido di un sito')
-	for dati1, dati2 in zip(nome[int(sito)-1], url_anime[int(sito)-1]):
+			print(non_ok + 'Inserisci un numero valido di un sito' + color_reset)
+	#print tutti i link del sito selezionato
+	for dati1 in nome[int(sito)-1]:
 		print('[' + str(a) + ']' + dati1)
 		a = a + 1
+	#selezione anime da scaricare
+	while not Ndown:
+		down = input("Inserisci il numero dell'anime[n] che vuoi scaricare: ")
+		if not int(down) > a - 1:
+			Ndown = True
+		else:
+			print(non_ok + 'Inserisci un numero valido ' + color_reset)
+	print(url_anime[int(sito) - 1][int(down) - 1])
 
 parser = argparse.ArgumentParser(description='Script per facilitare il download di contenuti dal web.')
 parser.add_argument('Input', type=str, help='URL o percorso di un file .txt o nome dell\'anime.')
