@@ -24,15 +24,16 @@ def Dreamsub(URL):
 	ep = re.search(r'<b>Episodi<\/b>: ([0-9]*)(?:\+)?<br>', page, re.IGNORECASE).group(1)
 	for n in range(1, int(ep) + 1):
 		sess = cfscrape.create_scraper(requests.session())
-		page = sess.get('{}/{}/'.format(URL, n)).text
-		page = '<b>LINK STREAMING</b>: <a rel="nofollow"  href="https://cdn.dreamsub.stream/vl/boku-dake-ga-inai-machi-erased/01/SUB_ITA" title="Guarda l\'episodio in streaming su Server">Server</a><br>'
-		link = re.findall(r'<b>LINK STREAMING<\/b>: <a rel="nofollow"  href="(https:\/\/cdn\.dreamsub\.stream\/.*)" title=".*">Server<\/a><br>', page, re.IGNORECASE)
+		page = sess.get('{}/{}/'.format(URL, n))
+		link = re.findall(r'<b>LINK STREAMING<\/b>: <a rel="nofollow" target="_blank" href="(https:\/\/cdn\.dreamsub\.(stream|org)\/.*)" title=".*">Server<\/a><br>', page.text, re.IGNORECASE)
+
 		try:
 			title = name + ' ' + str(n)
-			os.system('exe\\youtube-dl {0} -o "{1}/{2}/{3}"'.format(link[0], CONFIG['Path'], RemoveSpecialCharacter(name), title + '.%(ext)s'))
+			os.system('exe\\youtube-dl {0} -o "{1}/{2}/{3}"'.format(link[0][0], CONFIG['Path'], RemoveSpecialCharacter(name), title + '.%(ext)s'))
 			print(ok + "Episodio scaricato " + str(n) + color_reset)
 		except:
 			print(non_ok + "Impossibile scaricare l\'ep " + str(n) + color_reset)
+
 def DreamsubSearcher(anime):
 	url_anime = []
 	nome = []
