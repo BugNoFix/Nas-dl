@@ -46,11 +46,11 @@ def NASDL(URL):
 	# Tns
 	elif re.compile(Tns_VALID).match(URL):
 		Tns(URL)
-	'''
+
 	# AnimeUnity
 	elif re.compile(AnimeUnity_VALID).match(URL):
 		AnimeUnity(URL)
-	'''
+
 	# Openlaod
 	elif re.compile(r'https?:\/\/(?:openload|oload)\..*\/(?:f|embed)\/.*').match(URL):
 		os.system('youtube-dl {0} -o "{1}/{2}"'.format(URL, CONFIG['Path'], '%(title)s.%(ext)s'))
@@ -85,6 +85,19 @@ def searcher(Anime):
 			risultato = ' risultati'
 		print('['+ str(len(nome)) + '] ' + 'Dreamsub ha '+ str(len(temp1)) + risultato)
 	
+	# Anime unity
+	temp1, temp2 = AnimeUnitySearcher(Anime)
+	#verifico che temp1 abbia risultati
+	if len(temp1) != 0:
+		nome.append(temp1)
+		url_anime.append(temp2)
+		#La grammatica è importante
+		if len(temp1) == 1:
+			risultato = ' risultato'
+		else:
+			risultato = ' risultati'
+		print('['+ str(len(nome)) + '] ' + 'AnimeUnity ha '+ str(len(temp1)) + risultato)
+
 	# Tns
 	temp1, temp2 = TnsSearcher(Anime)
 	#verifico che temp1 abbia risultati
@@ -100,7 +113,7 @@ def searcher(Anime):
 
 	#selezione del sito e controllo dell'input
 	while not Nsito:
-		sito = input('\nInserisci il numero del sito[n] che vuoi usare: ')
+		sito = input('\n\nInserisci il numero del sito[n] che vuoi usare: ')
 		if not int(sito) > len(nome):
 			Nsito = True
 		else:
@@ -116,8 +129,9 @@ def searcher(Anime):
 			Ndown = True
 		else:
 			print(non_ok + 'Inserisci un numero valido ' + color_reset)
-	print(url_anime[int(sito) - 1][int(down) - 1])
+	NASDL(url_anime[int(sito) - 1][int(down) - 1])
 
+#siti_anime = '\nAnimeForce \nAnimeHDIta \nAnimepertutti \nAnimeSenzaLimiti \nAnimeUnity \nCrunchyroll \nFairyTailItalia \nHentaiHaven \nTnsFansub \nVvvvid'
 parser = argparse.ArgumentParser(description='Script per facilitare il download di contenuti dal web.')
 parser.add_argument('Input', type=str, help='URL o percorso di un file .txt o nome dell\'anime.')
 parser.add_argument('-r', '--ricerca', help='Ricerca in modo automatico gli url dell\' anime desiderato.', action='store_true')

@@ -22,7 +22,7 @@ def Tns(URL):
 	os.system('mkdir '+ '"' +dire.replace('/', '\\') + '"')
 	for link in ep:
 		a = a + 1
-		print('Downloading episode ' + a)
+		print('Scarico l\'episodio numero: ' + str(a))
 		r = requests.get(link, headers={"Referer":"https://tnsfansub.com/"})
 		with open(dire + r'Episodio ' + str(a), 'wb') as f:
 			f.write(r.content)
@@ -30,6 +30,7 @@ def Tns(URL):
 def TnsSearcher(anime):
 	url_anime = []
 	nome = []
+	link_anime = []
 	#encode url
 	encode = urllib.parse.quote_plus(anime)
 	url = base_url + encode
@@ -45,4 +46,9 @@ def TnsSearcher(anime):
 		if not trovato:
 			url_anime.append(metadati[0])
 			nome.append(metadati[1])
-	return nome, url_anime
+	#acquisisco i veri link
+	for temp1 in url_anime:
+		page = requests.get(temp1).text
+		link = re.search(r'<a href="(.*)"><img class=".*"', str(page), re.IGNORECASE).group(1)
+		link_anime.append(link)
+	return nome, link_anime
