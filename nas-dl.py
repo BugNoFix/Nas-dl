@@ -4,10 +4,14 @@
 # Copyright (c) 2018 games195, BugNoFix. Under MIT License.
 
 from extractor import *
-import re, argparse, os, json, colorama
+import re, argparse, os, json
 
 # Load configs
 CONFIG = json.load(open('setting.json'))
+
+non_ok = '\033[1;37;40m[\033[1;31;40mX\033[1;37;40m] '
+ok = '\033[1;37;40m[\033[1;32;40mok\033[1;37;40m] '
+color_reset = '\033[0;38;40m'
 
 def NASDL(URL):
 	# AnimeSenzaLimiti.net
@@ -46,11 +50,9 @@ def NASDL(URL):
 	# Tns
 	elif re.compile(Tns_VALID).match(URL):
 		Tns(URL)
-
 	# AnimeUnity
 	elif re.compile(AnimeUnity_VALID).match(URL):
 		AnimeUnity(URL)
-
 	# Openlaod
 	elif re.compile(r'https?:\/\/(?:openload|oload)\..*\/(?:f|embed)\/.*').match(URL):
 		os.system('youtube-dl {0} -o "{1}/{2}"'.format(URL, CONFIG['Path'], '%(title)s.%(ext)s'))
@@ -68,9 +70,6 @@ def searcher(Anime):
 	Nsito = False
 	Ndown = False
 	a = 1
-	non_ok = '[\033[1;31;40mX\033[1;37;40m] '
-	ok = '[\033[1;32;40mok\033[1;37;40m] '
-	color_reset = '\033[0;38;40m'
 	
 	# Dreamsub
 	temp1, temp2 = DreamsubSearcher(Anime)
@@ -87,7 +86,7 @@ def searcher(Anime):
 	
 	# Anime unity
 	temp1, temp2 = AnimeUnitySearcher(Anime)
-	#verifico che temp1 abbia risultati
+	# verifico che temp1 abbia risultati
 	if len(temp1) != 0:
 		nome.append(temp1)
 		url_anime.append(temp2)
@@ -100,29 +99,29 @@ def searcher(Anime):
 
 	# Tns
 	temp1, temp2 = TnsSearcher(Anime)
-	#verifico che temp1 abbia risultati
+	# verifico che temp1 abbia risultati
 	if len(temp1) != 0:
 		nome.append(temp1)
 		url_anime.append(temp2)
-		#La grammatica è importante
+		# La grammatica è importante
 		if len(temp1) == 1:
 			risultato = ' risultato'
 		else:
 			risultato = ' risultati'
 		print('['+ str(len(nome)) + '] ' + 'TnsFansub ha '+ str(len(temp1)) + risultato)
 
-	#selezione del sito e controllo dell'input
+	# Selezione del sito con controllo dell'input
 	while not Nsito:
 		sito = input('\n\nInserisci il numero del sito[n] che vuoi usare: ')
 		if not int(sito) > len(nome):
 			Nsito = True
 		else:
 			print(non_ok + 'Inserisci un numero valido di un sito' + color_reset)
-	#print tutti i link del sito selezionato
+	# Printo tutti i link del sito selezionato
 	for dati1 in nome[int(sito)-1]:
 		print('[' + str(a) + ']' + dati1)
 		a = a + 1
-	#selezione anime da scaricare
+	# Selezione anime da scaricare con controllo dell'input
 	while not Ndown:
 		down = input("Inserisci il numero dell'anime[n] che vuoi scaricare: ")
 		if not int(down) > a - 1:
@@ -131,11 +130,9 @@ def searcher(Anime):
 			print(non_ok + 'Inserisci un numero valido ' + color_reset)
 	NASDL(url_anime[int(sito) - 1][int(down) - 1])
 
-#siti_anime = '\nAnimeForce \nAnimeHDIta \nAnimepertutti \nAnimeSenzaLimiti \nAnimeUnity \nCrunchyroll \nFairyTailItalia \nHentaiHaven \nTnsFansub \nVvvvid'
 parser = argparse.ArgumentParser(description='Script per facilitare il download di contenuti dal web.')
 parser.add_argument('Input', type=str, help='URL o percorso di un file .txt o nome dell\'anime.')
 parser.add_argument('-r', '--ricerca', help='Ricerca in modo automatico gli url dell\' anime desiderato.', action='store_true')
-
 args = parser.parse_args()
 
 if args.ricerca:
@@ -145,4 +142,4 @@ elif re.compile('https?:\/\/.*').match(args.Input):
 else:
 	lines = open(args.Input).read().splitlines()
 	for url in lines:
-		NASDL(url)
+		NASDL(args.Input)

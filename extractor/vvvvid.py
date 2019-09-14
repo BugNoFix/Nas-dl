@@ -7,43 +7,10 @@ import requests, json, os, re, unidecode
 
 # Load configs
 CONFIG = json.load(open('setting.json'))
-'''
-VVVVID_VALID = r'https?:\/\/www.vvvvid.it\/(#!show|show)\/(.*)'
-
-def vvvvid(URL):
-    Input = input('Cosa vuoi scaricare?\n[1] Stagione\n[2] Episodio\nOpzione: ').title()
-
-    show_id, season_id = re.match(VVVVID_VALID, URL).groups()
-
-    # Download all episodes.
-    if Input in ['1', 'Stagione']:
-        # Get `conn_id`.
-        #data = json.loads(requests.get('https://www.vvvvid.it/user/login', headers={'User-Agent': CONFIG['UserAgent']}).text)
-        #conn_id = data['data']['conn_id']
-        sess = requests.session()
-        url = 'https://www.vvvvid.it/login'
-        values = {'username': 'safsaf@asfsa.asf',
-                  'password': '1Q2w3e4r5t'}
-
-        r = sess.post(url, data=values)
-        print(r.content)
-        # Get JSON Playlist.
-        #JSON_Link = 'https://www.vvvvid.it/vvvvid/ondemand/{}/season/{}?conn_id={}'.format(show_id, season_id, conn_id)
-        JSON_Link = sess.get("https://www.vvvvid.it/show/780/tokyo-ghoulre")
-        JSON = json.loads(sess.get(JSON_Link, headers={'User-Agent': CONFIG['UserAgent']}).text)
-
-        # Get number of episodes.
-        Num_Ep = len(JSON['data'])
-
-        for x in range(Num_Ep):
-            URL = 'https://www.vvvvid.it/#!show/{}/useless/{}/{}/useless'.format(show_id, season_id, JSON['data'][x]['video_id'])
-            os.system('youtube-dl {} -o {}/{}'.format(URL, CONFIG['Path'], '%(series)s/%(episode_number)s.%(ext)s'))
-
-    # Download single episodes.
-    elif Input in ['2', 'Episodio']:
-        os.system('youtube-dl {} -o {}/{}'.format(URL, CONFIG['Path'], '%(series)s/%(episode_number)s.%(ext)s'))
-'''
 VVVVID_VALID = r'https:\/\/www\.vvvvid\.it\/show\/(.*)\/.*'
+non_ok = '\033[1;37;40m[\033[1;31;40mX\033[1;37;40m] '
+ok = '\033[1;37;40m[\033[1;32;40mok\033[1;37;40m] '
+color_reset = '\033[0;38;40m'
 
 def vvvvidSeasonDownloader(URL):
     #variabili
@@ -86,7 +53,14 @@ def vvvvidSeasonDownloader(URL):
     #download
     for a in range(0,len(nome)):
         url = '{0}/{1}/{2}/{2}'.format(URL, season_id[a], video_id[a], nome[a])
-        os.system('exe\\youtube-dl {} -o {}/{}'.format(url, CONFIG['Path'], '%(series)s/%(episode_number)s.%(ext)s'))
+        try:
+            os.system('exe\\youtube-dl {} -o {}/{}'.format(url, CONFIG['Path'], '%(series)s/%(episode_number)s.%(ext)s'))
+            print(ok + "Episodio scaricato " + str(a+1) + color_reset)
+        except KeyboardInterrupt:
+            break
+            print("Script fermato")
+        except:
+            print(non_ok + "Impossibile scaricare l\'ep " + str(a+1) + color_reset)
 
 def vvvvid(URL):
     
@@ -96,5 +70,6 @@ def vvvvid(URL):
     if Input in ['1', 'Stagione']:
         vvvvidSeasonDownloader(URL)
         
-
-
+    # Download single episodes.
+    elif Input in ['2', 'Episodio']:
+        os.system('exe\\youtube-dl {} -o {}/{}'.format(URL, CONFIG['Path'], '%(series)s/%(episode_number)s.%(ext)s'))

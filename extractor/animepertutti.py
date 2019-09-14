@@ -12,10 +12,12 @@ CONFIG = json.load(open('setting.json'))
 AnimePerTutti_VALID = r'https:\/\/animepertutti\.com\/(.*)'
 
 def AnimePerTutti(URL):
+    # Cerco i dati
     page = requests.get(URL).text
     name = re.search(r'<h1 class="entry-title">(.*)<\/h1>', str(page), re.IGNORECASE).group(1)
     ep = re.search(r'<a href=".*"><span class="pagelink">(.*)<\/span></a>', page).group(1)
 
+    # Scarico tutti gli episodi
     for ep in range(1, int(ep) + 1):
         pageURL = '{}{}/'.format(URL, ep)
         page = requests.get(pageURL).text

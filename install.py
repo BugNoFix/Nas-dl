@@ -3,7 +3,9 @@
 
 # Copyright (c) 2019 bugnofix. Under MIT License.
 
+
 import os, re, glob, shutil, zipfile, time, sys
+# Controllo le libreria mancanti e le installo
 try:
 	try:
 		import requests
@@ -21,88 +23,114 @@ except:
 
 
 def youtube_dl():
-	print('installing youtube-dl..')
+	
+	print('download youtube-dl..')
 	url = 'https://yt-dl.org/downloads/2019.08.13/youtube-dl.exe'
 	r = requests.get(url)
+	
+	# Scarico l'eseguibile youtube-dl
 	with open(r'exe\\youtube-dl.exe', 'wb') as f:
 		f.write(r.content)
-	# install last version of youtube-dl
+	
+	# Aggiorno youtube-dl
 	os.system('exe\\youtube-dl.exe -U')
 
 def phantom_js():
-	print('installing phantom-js..')
+	
+	print('download phantom-js..')
 	url = 'https://phantomjs.org/download.html'
 	page = requests.get(url).text
-	r = re.search(r'<a href="(https:\/\/bitbucket\.org\/ariya\/phantomjs\/downloads\/phantomjs-2\.1\.1-windows\.zip)">phantomjs.*windows\.zip<\/a>', str(page), re.IGNORECASE).group(1)
+
+	# Cerco l'ultima versione di phantom-js
+	r = re.search(r'<a href="(.*)">phantomjs.*windows\.zip<\/a>', str(page), re.IGNORECASE).group(1)
 	file = requests.get(r)
+
+	# Scarico il file zip di phantom-js
 	with open(r'temp.zip', 'wb') as f:
 		f.write(file.content)
+
+	# Estraggo il file zip
 	with zipfile.ZipFile('temp.zip', 'r') as zip_ref:
 		zip_ref.extractall('temp1')
-
 	lista = glob.glob('temp1/phantomjs-*-windows/bin/phantomjs.exe')
 	for dire in lista:
 		os.rename(dire, 'exe\\phantomjs.exe')
+
+	# Elimino i file inutili
 	os.remove('temp.zip')
 	shutil.rmtree('temp1')
 
 def ffmpeg_ffprobe():
-	print('installing FFmpeg e FFprobe..')
+
+	print('download FFmpeg e FFprobe..')
 	url = 'https://ffmpeg.zeranoe.com/builds/win64/static/'
 	page = requests.get(url).text
+
+	# Cerco l'ultima versione di ffmpeg
 	r = re.search(r'<a href="(ffmpeg-.*-win64-static\.zip)" title="ffmpeg-.*-static\.zip">', str(page), re.IGNORECASE).group(1)
 	file = requests.get(url + r)
+
+	# Scarico il file zip
 	with open(r'temp.zip', 'wb') as f:
 		f.write(file.content)
 	with zipfile.ZipFile('temp.zip', 'r') as zip_ref:
 		zip_ref.extractall('temp1')
+
+	# Cerco ffmpeg e lo inserisco nella cartella exe
 	if not os.path.isfile('./ffmpeg.exe'):
 		lista = glob.glob('temp1/ffmpeg-*-win64-static/bin/ffmpeg.exe')
 		for dire in lista:
 			os.rename(dire, 'exe\\ffmpeg.exe')
+
+	# Cerco ffprobe e lo inserisco nella cartella exe
 	if not os.path.isfile('./ffprobe.exe'):
 		lista = glob.glob('temp1/ffmpeg-*-win64-static/bin/ffprobe.exe')
 		for dire in lista:
 			os.rename(dire, 'exe\\ffprobe.exe')
+
+	# Elimino i file inutili
 	os.remove('temp.zip')
 	shutil.rmtree('temp1')
 
+if __name__ == '__main__':
+	
+	# Variabili
+	ok = '[\033[1;32;40mok\033[1;37;40m] '
+	non_ok = '[\033[1;31;40mX\033[1;37;40m] '
 
-ok = '[\033[1;32;40mok\033[1;37;40m] '
-non_ok = '[\033[1;31;40mX\033[1;37;40m] '
-os.system('cls')
-if module:
-	print(ok + 'All modules are installed')
-else:
-	print(non_ok + 'The modules are not installed')
+	# Controllo se i moduli sono stati instalalti correttamente
+	os.system('cls')
+	if module:
+		print(ok + 'I moduli sono installati')
+	else:
+		print(non_ok + 'I moduli non sono installati')
 
-#create directory "exe"
-if not os.path.exists('./exe'):
-	print(os.path.exists('./exe'))
-	os.system('mkdir exe')
+	# Creo la directory exe
+	if not os.path.exists('./exe'):
+		os.system('mkdir exe')
 
-# install youtube-dl
-try:
-	if not os.path.isfile('./youtube-dl.exe'):
-		youtube_dl()
-	print(ok + "Youtube-dl is installed")
-except:
-	print(non_ok + 'Youtube-dl is not installed')
+	# Installo youtube-dl
+	try:
+		if not os.path.isfile('./youtube-dl.exe'):
+			youtube_dl()
+		print(ok + "Youtube-dl è installato")
+	except:
+		print(non_ok + 'Youtube-dl non è installato')
 
-# install phantomjs
-try:
-	if not os.path.isfile('./phantomjs.exe'):
-		phantom_js()
-	print(ok + "Phantom-js is installed")
-except:
-	print(non_ok + 'Phantom-js is not installed')
+	# Installo phantomjs
+	try:
+		if not os.path.isfile('./phantomjs.exe'):
+			phantom_js()
+		print(ok + "Phantom-js è installato")
+	except:
+		print(non_ok + 'Phantom-js non è installato')
 
-# install ffmpeg and ffprobe
-try:
-	if not os.path.isfile('./ffmpeg.exe') or not os.path.isfile('./ffprobe.exe'):
-		ffmpeg_ffprobe()
-	print(ok + "FFmpeg and FFprobe are installed")
-except:
-	print(non_ok + 'Ffmpeg and ffprobe are not installed')
+	# Installo ffmpeg e ffprobe
+	try:
+		if not os.path.isfile('./ffmpeg.exe') or not os.path.isfile('./ffprobe.exe'):
+			ffmpeg_ffprobe()
+		print(ok + "FFmpeg è FFprobe sono installati")
+	except:
+		print(non_ok + 'FFmpeg è FFprobe non sono installati')
 
 
