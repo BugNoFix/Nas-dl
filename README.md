@@ -5,7 +5,7 @@
 
 
 ## Pre-requisiti
-* Python 3.7
+* [Python 3.7](https://www.python.org/downloads/release/python-374/)
 * Aver impostato pip come variabile d'ambiente.
 
 ## Installazione
