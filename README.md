@@ -45,4 +45,4 @@ py nas-dl.py -r "Nome_anime"
 * Vvvvid
 
 ## Informazioni
-Questo script è stato creato da [~~***Games195***~~](https://github.com/games195/) e [***BugNoFix***](https://github.com/BugNoFix)
+Questo script è stato creato da [***games195***](https://github.com/games195/) e [***BugNoFix***](https://github.com/BugNoFix)
