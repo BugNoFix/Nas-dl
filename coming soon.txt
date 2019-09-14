@@ -1,2 +1,0 @@
-nas-dl su server locale
-nas-dl cerca automaticamente gli url con il nome dell'anime
