@@ -10,7 +10,13 @@
 
 ## Installazione
 
-Installare le dipendenze avviando install.py con il comando `py install.py`.
+1. Installare le dipendenze avviando install.py con il comando `py install.py`.
+
+2. Modificare la cartella di download aprendo il file setting.json è modificare il path come nell'esemio:
+
+`"Path": "C:/dir/download"`
+
+**Attenzione: Sostituire tutti i _backslash_(\\) in _slash_(/) nel percorso della directory**
 
 ## Come usare Nas-dl
 
@@ -39,4 +45,4 @@ py nas-dl.py -r "Nome_anime"
 * Vvvvid
 
 ## Informazioni
-Questo script è stato creato da ***Games195*** e ***BugNoFix***
+Questo script è stato creato da [~~***Games195***~~](https://github.com/games195/) e [***BugNoFix***](https://github.com/BugNoFix)
