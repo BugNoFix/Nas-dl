@@ -6,7 +6,7 @@
 
 ## Pre-requisiti
 * Python 3.7
-* Aggiungere pip come variabile d'ambiente.
+* Aver impostato pip come variabile d'ambiente.
 
 ## Installazione
 
