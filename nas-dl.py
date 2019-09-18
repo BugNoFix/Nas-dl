@@ -112,7 +112,7 @@ def searcher(Anime):
 
 	# Selezione del sito con controllo dell'input
 	while not Nsito:
-		sito = input('\n\nInserisci il numero del sito[n] che vuoi usare: ')
+		sito = input('\nInserisci il numero del sito[n] che vuoi usare: ')
 		if not int(sito) > len(nome):
 			Nsito = True
 		else:
@@ -123,7 +123,7 @@ def searcher(Anime):
 		a = a + 1
 	# Selezione anime da scaricare con controllo dell'input
 	while not Ndown:
-		down = input("Inserisci il numero dell'anime[n] che vuoi scaricare: ")
+		down = input("\nInserisci il numero dell'anime[n] che vuoi scaricare: ")
 		if not int(down) > a - 1:
 			Ndown = True
 		else:
