@@ -27,7 +27,7 @@ def AnimeUnity(URL):
 		url = 'https://animeunity.it/'+ link
 		page = requests.get(url).text
 		video = re.search(r'<source src="(.*)" type="video\/.*">\s*<\/video>', str(page), re.IGNORECASE).group(1)
-		os.system('exe\\youtube-dl {0} -o "{1}/{2}/{3}"'.format(video, CONFIG['Path'],name ,name + '.%(ext)s' + ' ep ' + str(a)))
+		os.system('exe\\youtube-dl {0} -o "{1}/{2}/{3}"'.format(video, CONFIG['Path'],name ,name + ' ep ' + str(a) + '.%(ext)s'))
 
 def AnimeUnitySearcher(anime):
 
