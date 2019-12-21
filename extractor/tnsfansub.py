@@ -18,7 +18,7 @@ def Tns(URL):
 	page = requests.get(URL).text
 	name = re.search(r'<b>Titolo: <\/b>(.*)<br \/>', str(page), re.IGNORECASE).group(1)
 	ep = re.findall(r'<a href="(https:\/\/tnsfansub\.com\/downloads\/.*)">', str(page), re.IGNORECASE)
-	dire = CONFIG['Path'] + '/' + name + '/'
+	dire = CONFIG['Path'] + '/' + name
 	os.system('mkdir '+ '"' +dire.replace('/', '\\') + '"')
 
 	# Scarico tutti gli episodi
