@@ -25,7 +25,7 @@ def AnimeForce(URL):
             URL = link
         page = requests.get(URL).text
         AnimeLink = re.search(r'<a href="(.*)" target="_blank">Download<\/a>', str(page), re.IGNORECASE).group(1)
-        os.system('exe\\youtube-dl {0} -o "{1}/{2}/{3}"'.format(AnimeLink, CONFIG['Path'], RemoveSpecialCharacter(name), '%(title)s.%(ext)s'))
+        os.system('youtube-dl {0} -o "{1}/{2}/{3}"'.format(AnimeLink, CONFIG['Path'], RemoveSpecialCharacter(name), '%(title)s.%(ext)s'))
 '''
 def AnimeForceSearcher():
     anime = input("Dimmi il nome da cercare: ")

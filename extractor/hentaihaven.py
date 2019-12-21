@@ -18,7 +18,7 @@ def HentaiHaven(URL):
         page = requests.get(link).text
         name = re.search(r'<title>(.*) - Episode .*\|.*\|.*<\/title>', str(page), re.IGNORECASE).group(1)
         AnimeLink = re.search(r'res="720p"  label="720p" src="(.*)" type=\'video/mp4\'  data-res="720"\/>', str(page), re.IGNORECASE).group(1)
-        os.system('exe\\youtube-dl {0} -o "{1}/{2}/{3}"'.format(AnimeLink, CONFIG['Path'], RemoveSpecialCharacter(name), '%(title)s.%(ext)s'))
+        os.system('youtube-dl {0} -o "{1}/{2}/{3}"'.format(AnimeLink, CONFIG['Path'], RemoveSpecialCharacter(name), '%(title)s.%(ext)s'))
 
     def series(link):
         page = requests.get(URL).text

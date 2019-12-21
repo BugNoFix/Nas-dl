@@ -26,12 +26,12 @@ def AnimeSenzaLimiti(URL):
 
         openload = re.search(r'src="(https?:\/\/(?:openload|oload)\..*\/(?:f|embed)\/.*)" scrolling="no"', str(page), re.IGNORECASE).group(1)
         if openload and OpenloadStreamangoCheck(openload):
-            os.system('exe\\youtube-dl {0} -o "{1}/{2}/{3}"'.format(openload, CONFIG['Path'], RemoveSpecialCharacter(name), '%(title)s.%(ext)s'))
+            os.system('youtube-dl {0} -o "{1}/{2}/{3}"'.format(openload, CONFIG['Path'], RemoveSpecialCharacter(name), '%(title)s.%(ext)s'))
             continue
 
         streamango = re.search(r'src="(https?:\/\/streamango\.com\/embed\/.*)" scrolling="no"', str(page), re.IGNORECASE).group(1)
         if streamango and OpenloadStreamangoCheck(streamango):
-            os.system('exe\\youtube-dl {0} -o "{1}/{2}/{3}"'.format(streamango, CONFIG['Path'], RemoveSpecialCharacter(name), '%(title)s.%(ext)s'))
+            os.system('youtube-dl {0} -o "{1}/{2}/{3}"'.format(streamango, CONFIG['Path'], RemoveSpecialCharacter(name), '%(title)s.%(ext)s'))
             continue
 
         # Else

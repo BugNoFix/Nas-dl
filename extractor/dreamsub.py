@@ -32,7 +32,7 @@ def Dreamsub(URL):
 		page = sess.get('{}/{}/'.format(URL, n))
 		link = re.search(r'<b>LINK STREAMING<\/b>: <a rel="nofollow" target="_blank" href="(https:\/\/cdn5?\.dreamsub\.(stream|org)\/.*)" title="Guarda l\'episodio in streaming su Server">Server\s*1?<\/a>', page.text, re.IGNORECASE).group(1)
 		title = name + ' ' + str(n)
-		os.system('exe\\youtube-dl {0} -o "{1}/{2}/{3}"'.format(link, CONFIG['Path'], RemoveSpecialCharacter(name), title + '.%(ext)s'))
+		os.system('youtube-dl {0} -o "{1}/{2}/{3}"'.format(link, CONFIG['Path'], RemoveSpecialCharacter(name), title + '.%(ext)s'))
 		print(ok + "Episodio scaricato " + str(n) + color_reset)
 
 

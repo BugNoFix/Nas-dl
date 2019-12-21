@@ -54,7 +54,7 @@ def vvvvidSeasonDownloader(URL):
     for a in range(0,len(nome)):
         url = '{0}/{1}/{2}/{2}'.format(URL, season_id[a], video_id[a], nome[a])
         try:
-            os.system('exe\\youtube-dl {} -o {}/{}'.format(url, CONFIG['Path'], '%(series)s/%(episode_number)s.%(ext)s'))
+            os.system('youtube-dl {} -o {}/{}'.format(url, CONFIG['Path'], '%(series)s/%(episode_number)s.%(ext)s'))
             print(ok + "Episodio scaricato " + str(a+1) + color_reset)
         except KeyboardInterrupt:
             break
@@ -72,4 +72,4 @@ def vvvvid(URL):
         
     # Download single episodes.
     elif Input in ['2', 'Episodio']:
-        os.system('exe\\youtube-dl {} -o {}/{}'.format(URL, CONFIG['Path'], '%(series)s/%(episode_number)s.%(ext)s'))
+        os.system('youtube-dl {} -o {}/{}'.format(URL, CONFIG['Path'], '%(series)s/%(episode_number)s.%(ext)s'))

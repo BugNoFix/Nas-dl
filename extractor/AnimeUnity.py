@@ -32,7 +32,7 @@ def AnimeUnity(URL):
 			finalname = name + ' ep 0' +  str(a)
 		else:
 			finalname = name + ' ep ' + str(a)
-		os.system('exe\\youtube-dl {0} -o "{1}/{2}/{3}"'.format(video, CONFIG['Path'], name, finalname + '.%(ext)s'))
+		os.system('youtube-dl {0} -o "{1}/{2}/{3}"'.format(video, CONFIG['Path'], name, finalname + '.%(ext)s'))
 
 def AnimeUnitySearcher(anime):
 

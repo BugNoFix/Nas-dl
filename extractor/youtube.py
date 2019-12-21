@@ -22,4 +22,4 @@ def YouTube(URL):
         sys.exit('\nOpzione in WIP')
     else:
         sys.exit('[/**\] Input non valido!')
-    os.system('exe\\youtube-dl {0} -o "{1}/{2}" {3}'.format(URL, Path, '%(title)s.%(ext)s', cmd))
+    os.system('youtube-dl {0} -o "{1}/{2}" {3}'.format(URL, Path, '%(title)s.%(ext)s', cmd))
