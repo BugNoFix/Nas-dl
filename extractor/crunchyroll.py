@@ -14,36 +14,30 @@ def DownloadAnime(url):
 
     # Parsing informations
     JSON = json.loads(re.search(r'vilos\.config\.media = ({.*});', page, re.IGNORECASE).group(1))
-    name = re.search(r'{"id":.*,"collection_id":.*,"group_id":.*,"name":"(.*)","duration":.*,"tags":.*};', page, re.IGNORECASE).group(1)
-    serie_name = re.search(r'(.*) - .* - .*', name, re.IGNORECASE).group(1)
-    episode = re.search(r'.* - Episode (.*) - .*', name, re.IGNORECASE).group(1)
+    
+    # Normal ep
+    try:
+        data = re.search(r'<title>(.*) Episodio ([0-9]*), .*, - Guardalo su Crunchyroll<\/title>', page)
+        episode = data.group(2) 
+        if int(episode) < 10:
+            episode = "0" + episode
+    # Extra
+    except:
+        data = re.search(r'<title>(.*) (Episodio .*), .*, - Guardalo su Crunchyroll<\/title>', page, re.IGNORECASE)
+        episode = data.group(2) 
+    
+    # Set data
+    name = RemoveSpecialCharacter(data.group(1))
 
     for streams in JSON['streams']:
         if streams['hardsub_lang'] == CONFIG['Crunchyroll']['Lang']:
             m3u8 = streams['url']
+            break
 
-    print('[CrunchyRipper] Downloading {} episode...'.format(episode))
-
-    # file_name = ('[Raws195] {} [Sub {}].{}').format(name, CONFIG['Crunchyroll']['Lang'], CONFIG['Crunchyroll']['FileExtension'])
-    file_name = ('{}.{}').format(episode, CONFIG['Crunchyroll']['FileExtension'])
-    file_name = RemoveSpecialCharacter(file_name)
-    serie_name = RemoveSpecialCharacter(serie_name)
-
-    OutputPath = CONFIG['Path'] + '/' + serie_name + '/'
-    FilePath = OutputPath + file_name
-
-    if not os.path.exists(OutputPath):
-        os.makedirs(OutputPath)
-    if not os.path.isfile(FilePath):
-        ffmpeg_command = ('ffmpeg -loglevel panic -i "{}" -c copy -bsf:a aac_adtstoasc "{}{}"').format(m3u8, OutputPath, file_name)
-        subprocess.check_call(shlex.split(ffmpeg_command))
-        print('[CrunchyRipper] Download finished.')
-    else:
-        print('[CrunchyRipper] Existing file. Skipping...')
+    os.system('exe\\youtube-dl "{0}" -o "{1}/{2}/{3} {4}"'.format(m3u8, CONFIG['Path'], name, name, episode + ".mp4"))
 
 def Playlist(url):
     page = str((requests.get(url=url, headers={'User-Agent': CONFIG['UserAgent']})).text)
-
     links = []
     for link in re.findall(r'<a href="(.*)" title=".*"', page):
         links.append('http://www.crunchyroll.com/' + link)
