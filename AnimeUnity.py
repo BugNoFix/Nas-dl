@@ -20,7 +20,7 @@ def AnimeUnity(URL):
 	sess = cfscrape.create_scraper(requests.session())
 	page = (sess.get(URL).text)
 	name = re.search(r'<div class="general">\s<h1 class="title">\s(.*)\s<\/h1>', str(page), re.IGNORECASE).group(1)
-	eps = re.search(r'episode="(.*)', str(page), re.IGNORECASE).group(1)
+	eps = re.search(r'episodes="(.*)"', str(page), re.IGNORECASE).group(1)
 	ep = re.findall(r'(https:\\\/\\\/www\.animeunityserver[0-9]*\.cloud\\\/DDL\\\/Anime\\\/[a-zA-Z0-9_.-]*\\\/[a-zA-Z0-9_.-]*_Ep_[0-9]*_SUB_ITA\.mp4)', str(eps), re.IGNORECASE)
 	
 	# Scarico tutti gli episodi
