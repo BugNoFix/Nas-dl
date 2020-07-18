@@ -9,7 +9,7 @@ from utilies import RemoveSpecialCharacter
 # Load configs
 CONFIG = json.load(open('setting.json'))
 
-AnimeUnity_VALID = r'https:\/\/www.animeunity\.it\/.*'
+AnimeUnity_VALID = r'https:\/\/animeunity\.it\/.*'
 base_url = 'https://www.animeunity.it/'
 
 def AnimeUnity(URL):
@@ -19,20 +19,19 @@ def AnimeUnity(URL):
 	# Cerco i dati
 	sess = cfscrape.create_scraper(requests.session())
 	page = (sess.get(URL).text)
-	name = re.search(r'<p>\s*<b>TITOLO: <\/b>(.*)											<\/p>', str(page), re.IGNORECASE).group(1)
-	ep = re.findall(r'<div class="ep-box col-lg-1 col-sm-1" style="width:19%">\s*<a href="(anime\.php\?id=.*)" ', str(page), re.IGNORECASE)
+	name = re.search(r'<h1 class="title">\s(.*)\s<\/h1>', str(page), re.IGNORECASE).group(1)
+	eps = re.search(r'episodes="(.*)"', str(page), re.IGNORECASE).group(1)
+	ep = re.findall(r'(https:\\\/\\\/www\.animeunityserver[0-9]*\.cloud\\\/DDL\\\/Anime\\\/[a-zA-Z0-9_.-]*\\\/[a-zA-Z0-9_.-]*_Ep_[0-9]*_SUB_ITA\.mp4)', str(eps), re.IGNORECASE)
 	
 	# Scarico tutti gli episodi
 	for link in ep:
 		a = a + 1
-		url = 'https://animeunity.it/'+ link
-		page = sess.get(url).text
-		video = re.search(r'<source src="(.*)" type="video\/.*">\s*<\/video>', str(page), re.IGNORECASE).group(1)
 		if a < 10:
 			finalname = name + ' ep 0' +  str(a)
 		else:
 			finalname = name + ' ep ' + str(a)
-		os.system('exe\\youtube-dl {0} -o "{1}/{2}/{3}"'.format(video, CONFIG['Path'], name, finalname + '.%(ext)s'))
+		link = link.replace("\\","")
+		os.system('exe\\youtube-dl {0} -o "{1}/{2}/{3}"'.format(link, CONFIG['Path'], name, finalname + '.%(ext)s'))
 
 def AnimeUnitySearcher(anime):
 
