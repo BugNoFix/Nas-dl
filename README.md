@@ -12,7 +12,7 @@
 
 1. Installare le dipendenze avviando install.py con il comando `py install.py`.
 
-2. Modificare la cartella di download aprendo il file setting.json è modificare il path come nell'esemio:
+2. Modificare la cartella di download aprendo il file setting.json e modificare il path come nell'esemio:
 
 `"Path": "C:/dir/download"`
 
